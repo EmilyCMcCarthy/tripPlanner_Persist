@@ -13,6 +13,8 @@
  * This module has one public method: `.create()`, used by `days.js`.
  */
 
+
+
 var dayModule = (function () {
 
   // jQuery selections
@@ -51,8 +53,15 @@ var dayModule = (function () {
     this.$button = $('<button class="btn btn-circle day-btn"></button>')
       .text(this.number);
     var self = this;
+    var DayNumber = self.number;
     this.$button.on('click', function (){
       this.blur(); // removes focus box from buttons
+$.ajax({
+  method: 'POST',
+  url: '/api/days',
+
+}).then().catch();
+
       tripModule.switchTo(self);
     });
     return this;

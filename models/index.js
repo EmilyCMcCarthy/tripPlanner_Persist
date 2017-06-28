@@ -13,6 +13,7 @@ Day.belongsTo(Hotel);
 Hotel.hasMany(Day);
 
 Day.belongsToMany(Restaurant,{through: 'day_restaurant'});
+Day.belongsToMany(Activity,{through: 'day_activity'});
 
 module.exports = {
 	db,

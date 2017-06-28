@@ -30,7 +30,7 @@ app.use('/', require('./routes/index.js'));
 app.use('/api/hotels', require('./routes/hotels'));
 app.use('/api/activities', require('./routes/activities'));
 app.use('/api/restaurants', require('./routes/restaurants'));
-
+app.use('/api/days', require('./routes/daysR'));
 
 // failed to catch req above means 404, forward to error handler
 app.use(function (req, res, next) {
