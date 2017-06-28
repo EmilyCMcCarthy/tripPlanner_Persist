@@ -29,6 +29,26 @@ var utilsModule = {
     return array.splice(index, 1);
   },
 
+  // addAttraction: function (attraction, type) {
+  //   // adding to the day object
+  //   switch (type) {
+  //     case 'hotel':
+  //       if (this.hotel) this.hotel.hide();
+  //       this.hotel = attraction;
+  //       break;
+  //     case 'restaurant':
+  //       utilsModule.pushUnique(this.restaurants, attraction);
+  //       break;
+  //     case 'activity':
+  //       utilsModule.pushUnique(this.activities, attraction);
+  //       break;
+  //     default: console.error('bad type:', attraction);
+  //   }
+  //   // activating UI
+  //   attraction.show();
+  // };
+
+
   logErr: console.error.bind(console)
 
 };

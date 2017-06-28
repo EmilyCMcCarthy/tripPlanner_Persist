@@ -9,6 +9,9 @@
  * then tells the trip module to add the attraction.
  */
 
+var todaysRest = [];
+
+
 $(function(){
 
   // jQuery selects
@@ -39,8 +42,13 @@ $(function(){
     //console.log('attraction', attraction);
     //tripModule.addToCurrent(attraction);
 
+    
+
+    console.log(type)
+
+    if(type === "hotel"){
       $.ajax({
-        method: 'GET',
+        method: 'POST',
         url: '/api/hotels',
         //data: someDataToSend, // e.g. for POST requests
       })
@@ -54,6 +62,43 @@ $(function(){
       })
       .catch(function (errorObj) {
       });
+    }
+    else if(type === "restaurant"){
+
+      var attraction = attractionsModule.getByTypeAndId(type, id);
+
+      $.ajax({
+        method: 'POST',
+        url: '/api/restaurants',
+        //data: someDataToSend, // e.g. for POST requests
+      })
+      .then(function (responseData) {
+        //console.log(responseData)
+        // var sortedResponse = responseData.sort(function(a,b){
+        //   return a.id - b.id;
+        // })
+        // var attraction = sortedResponse[id-1].name;
+
+        utilsModule.pushUnique(todaysRest, responseData[id-1]);
+        console.log(todaysRest, "todaysRest Array");
+
+        todaysRest.forEach(function(elem){
+             $('#itinerary [data-type="restaurants"]').append(elem.name);
+        })
+
+       
+
+      })
+      .catch(function (errorObj) {
+      });
+    }
+    else if(type === "activity"){
+
+    }
+    else{
+      throw new Error("please use correct");
+    }
+      
 
   });
 
