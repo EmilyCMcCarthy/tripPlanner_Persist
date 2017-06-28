@@ -35,8 +35,39 @@ $(function(){
     var type = $select.data('type'); // from HTML data-type attribute
     var id = $select.find(':selected').val();
     // get associated attraction and add it to the current day in the trip
-    var attraction = attractionsModule.getByTypeAndId(type, id);
-    tripModule.addToCurrent(attraction);
+    //var attraction = attractionsModule.getByTypeAndId(type, id);
+    //console.log('attraction', attraction);
+    //tripModule.addToCurrent(attraction);
+
+      $.ajax({
+        method: 'GET',
+        url: '/api/hotels',
+        //data: someDataToSend, // e.g. for POST requests
+      })
+      .then(function (responseData) {
+        console.log(responseData)
+        var sortedResponse = responseData.sort(function(a,b){
+          return a.id - b.id;
+        })
+        var attraction = sortedResponse[id-1].name;
+        $('#itinerary [data-type="hotel"]').text(attraction);
+      })
+      .catch(function (errorObj) {
+      });
+
   });
 
 });
+
+
+// $.ajax({
+//   method: 'VERB',
+//   url: '/whatever/route',
+//   data: someDataToSend, // e.g. for POST requests
+// })
+// .then(function (responseData) {
+//   // some code to run when the response comes back
+// })
+// .catch(function (errorObj) {
+//   // some code to run if the request errors out
+// });
