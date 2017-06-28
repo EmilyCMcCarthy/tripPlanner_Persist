@@ -30,21 +30,21 @@ var attractionModule = (function () {
 
   function Attraction (data) {
     utilsModule.merge(data, this); // copy all key-val pairs into this new obj
-    this.buildItineraryItem().buildMarker();
+    //this.buildItineraryItem().buildMarker();
   }
 
-  Attraction.prototype.buildItineraryItem = function () {
-    var $button = $('<button class="btn btn-xs btn-danger remove btn-circle">x</button>');
-    var $title = $('<span class="title"></span>').text(this.name);
-    this.$itineraryItem = $('<div class="itinerary-item"></div>')
-      .append($title)
-      .append($button);
-    var self = this;
-    $button.on('click', function () {
-      tripModule.removeFromCurrent(self); // remove from day model
-    });
-    return this;
-  };
+  // Attraction.prototype.buildItineraryItem = function () {
+  //   var $button = $('<button class="btn btn-xs btn-danger remove btn-circle">x</button>');
+  //   var $title = $('<span class="title"></span>').text(this.name);
+  //   this.$itineraryItem = $('<div class="itinerary-item"></div>')
+  //     .append($title)
+  //     .append($button);
+  //   var self = this;
+  //   $button.on('click', function () {
+  //     tripModule.removeFromCurrent(self); // remove from day model
+  //   });
+  //   return this;
+  // };
 
   Attraction.prototype.buildMarker = function () {
     this.marker = mapModule.buildAttractionMarker(this);

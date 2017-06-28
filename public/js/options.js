@@ -10,6 +10,7 @@
  */
 
 var todaysRest = [];
+var todaysAct = [];
 
 
 $(function(){
@@ -44,7 +45,9 @@ $(function(){
 
     
 
-    console.log(type)
+    //console.log(type);
+    var attraction = attractionsModule.getByTypeAndId(type, id);
+
 
     if(type === "hotel"){
       $.ajax({
@@ -58,14 +61,13 @@ $(function(){
           return a.id - b.id;
         })
         var attraction = sortedResponse[id-1].name;
-        $('#itinerary [data-type="hotel"]').text(attraction);
+        $('#itinerary [data-type="hotel"]').text(attraction).append('<button class="btn btn-xs btn-danger remove remove-rest btn-circle">x</button>');
       })
       .catch(function (errorObj) {
       });
     }
-    else if(type === "restaurant"){
 
-      var attraction = attractionsModule.getByTypeAndId(type, id);
+    else if(type === "restaurant"){
 
       $.ajax({
         method: 'POST',
@@ -73,46 +75,33 @@ $(function(){
         //data: someDataToSend, // e.g. for POST requests
       })
       .then(function (responseData) {
-        //console.log(responseData)
-        // var sortedResponse = responseData.sort(function(a,b){
-        //   return a.id - b.id;
-        // })
-        // var attraction = sortedResponse[id-1].name;
-
-        utilsModule.pushUnique(todaysRest, responseData[id-1]);
-        console.log(todaysRest, "todaysRest Array");
-
-        todaysRest.forEach(function(elem){
-             $('#itinerary [data-type="restaurants"]').append(elem.name);
-        })
-
-       
-
+        utilsModule.pushUnique(todaysRest, attraction);
+        //console.log(todaysRest, "todaysRest Array");
+        $('#itinerary [data-type="restaurants"]').append('<div><span class="title">'+todaysRest[todaysRest.length-1].name+'</span>\n<button class="btn btn-xs btn-danger remove remove-rest btn-circle">x</button>\n</div>');
       })
       .catch(function (errorObj) {
       });
     }
+
     else if(type === "activity"){
+      $.ajax({
+        method: 'POST',
+        url: '/api/activities',
+        //data: someDataToSend, // e.g. for POST requests
+      })
+      .then(function (responseData) {
+        utilsModule.pushUnique(todaysAct, attraction);
+        //console.log(todaysAct, "todaysRest Array");
+        $('#itinerary [data-type="activities"]').append('<div><span class="title">'+todaysAct[todaysAct.length-1].name+'</span>\n<button class="btn btn-xs btn-danger remove remove-rest btn-circle">x</button>\n</div>');
+      })
+      .catch(function (errorObj) {
+      });
 
     }
     else{
       throw new Error("please use correct");
     }
-      
-
   });
 
 });
 
-
-// $.ajax({
-//   method: 'VERB',
-//   url: '/whatever/route',
-//   data: someDataToSend, // e.g. for POST requests
-// })
-// .then(function (responseData) {
-//   // some code to run when the response comes back
-// })
-// .catch(function (errorObj) {
-//   // some code to run if the request errors out
-// });
